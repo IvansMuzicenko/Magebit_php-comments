@@ -16,6 +16,17 @@ const getAllAuthors = function () {
 };
 getAllAuthors();
 
+const addAuthor = function (id, firstname, lastname) {
+  const authorSelect = document.querySelector("#author_select");
+
+  const newOption = document.createElement("option");
+
+  newOption.value = id;
+  newOption.textContent = firstname + " " + lastname;
+
+  authorSelect.append(newOption);
+};
+
 const getAllComments = function () {
   fetch("api.php?api=get-all-comments", {
     method: "GET",
@@ -24,7 +35,6 @@ const getAllComments = function () {
     .then((data) => {
       document.querySelector("#comments-list").innerHTML = "";
       data["comments"].forEach((comment) => {
-        console.log(comment);
         addComment(
           comment.id,
           comment.message,
@@ -37,16 +47,6 @@ const getAllComments = function () {
 };
 getAllComments();
 
-const addAuthor = function (id, firstname, lastname) {
-  const authorSelect = document.querySelector("#author_select");
-
-  const newOption = document.createElement("option");
-
-  newOption.value = id;
-  newOption.textContent = firstname + " " + lastname;
-
-  authorSelect.append(newOption);
-};
 const addComment = function (id, message, date, firstname, lastname) {
   const commentsList = document.querySelector("#comments-list");
 
