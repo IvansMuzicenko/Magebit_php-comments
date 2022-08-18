@@ -129,7 +129,7 @@ commentsForm.onsubmit = function (evt) {
     .then(async (response) => await response.json())
     .then((data) => {
       if (data.status) {
-        getAllComments();
+        getComments();
       }
     });
 };
