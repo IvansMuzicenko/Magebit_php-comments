@@ -41,6 +41,7 @@ if (isset($_GET["api"])) {
             $author_id = $_POST['comment_author'];
             $message = $_POST['comment_message'];
 
+
             if (isset($id) && isset($author_id) && isset($message)) {
                 $result = $comments->addComment($id, $author_id, $message);
                 $output = [
@@ -50,8 +51,12 @@ if (isset($_GET["api"])) {
             }
             break;
 
-        case 'get-all-comments':
-            $comments_list = $comments->getAllComments();
+        case 'get-comments':
+            $filter = "";
+            if (isset($_GET["id"])) {
+                $filter = $_GET["id"];
+            }
+            $comments_list = $comments->getComments($filter);
 
             $output = [
                 'message' => 'All comments listed',

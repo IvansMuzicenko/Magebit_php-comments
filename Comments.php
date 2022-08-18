@@ -9,8 +9,20 @@ class Comments extends Database {
         $this->db = new Database();
     }
 
-    public function getAllComments() {
-        $this->db->query("SELECT comments.id, comments.message, comments.date, authors.firstname, authors.lastname FROM {$this->table} INNER JOIN authors ON comments.author_id=authors.id ORDER BY comments.date DESC");
+    public function getComments($filter) {
+        $query = "SELECT 
+        comments.id, comments.message, comments.date, authors.firstname, authors.lastname
+        FROM {$this->table} 
+        INNER JOIN authors 
+        ON comments.author_id=authors.id";
+
+        if (strlen($filter)) {
+            $query .= " WHERE comments.author_id = '$filter'";
+        }
+
+        $query .= " ORDER BY comments.date DESC";
+
+        $this->db->query($query);
         $results = $this->db->resultSet();
 
         return $results;

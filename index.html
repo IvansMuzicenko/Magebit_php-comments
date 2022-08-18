@@ -22,7 +22,7 @@
 
     <form id="comments-form" action="api.php?action=add-comment" method="POST">
       <h2>Add comment</h2>
-      <select id="author_select" name="comment_author"></select>
+      <select class="author_select" name="comment_author"></select>
       <br />
       <textarea
         type="text"
@@ -33,6 +33,9 @@
       ></textarea>
       <br />
       <button type="submit">Submit</button>
+    </form>
+    <form action="api.php?action=get-filtered-comments" method="GET">
+      <select class="author_select filter" name="comment_author"></select>
     </form>
 
     <div id="comments-list"></div>

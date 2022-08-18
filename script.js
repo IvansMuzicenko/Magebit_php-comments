@@ -8,16 +8,23 @@ const getAllAuthors = function () {
   })
     .then(async (response) => await response.json())
     .then((data) => {
-      document.querySelector("#author_select").innerHTML = "";
-      data["authors"].forEach((author) => {
-        addAuthor(author.id, author.firstname, author.lastname);
+      const authorSelect = document.querySelectorAll(".author_select");
+      authorSelect.forEach((selector) => {
+        selector.innerHTML = "";
+        if (selector.classList.contains("filter")) {
+          selector.innerHTML =
+            "<option value='all' selected='selected'>All</option>";
+        }
+        data["authors"].forEach((author) => {
+          addAuthor(selector, author.id, author.firstname, author.lastname);
+        });
       });
     });
 };
 getAllAuthors();
 
-const addAuthor = function (id, firstname, lastname) {
-  const authorSelect = document.querySelector("#author_select");
+const addAuthor = function (selector, id, firstname, lastname) {
+  const authorSelect = selector;
 
   const newOption = document.createElement("option");
 
@@ -27,8 +34,14 @@ const addAuthor = function (id, firstname, lastname) {
   authorSelect.append(newOption);
 };
 
-const getAllComments = function () {
-  fetch("api.php?api=get-all-comments", {
+const getComments = function () {
+  let filter = "";
+  const filterValue = document.querySelector(".filter").value;
+
+  if (filterValue != "all" && filterValue != "") {
+    filter = `&id=${filterValue}`;
+  }
+  fetch("api.php?api=get-comments" + filter, {
     method: "GET",
   })
     .then(async (response) => await response.json())
@@ -45,7 +58,7 @@ const getAllComments = function () {
       });
     });
 };
-getAllComments();
+getComments();
 
 const addComment = function (id, message, date, firstname, lastname) {
   const commentsList = document.querySelector("#comments-list");
@@ -65,6 +78,10 @@ const addComment = function (id, message, date, firstname, lastname) {
   newComment.append(newMessage);
 
   commentsList.append(newComment);
+};
+
+document.querySelector(".filter").onchange = function () {
+  getComments();
 };
 
 authorsForm.onsubmit = function (evt) {
