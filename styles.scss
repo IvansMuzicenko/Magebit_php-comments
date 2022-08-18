@@ -1,0 +1,13 @@
+.comment {
+  border: 1px solid black;
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  &__message {
+    padding: 1rem;
+  }
+}

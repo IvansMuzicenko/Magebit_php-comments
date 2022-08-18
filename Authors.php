@@ -10,7 +10,7 @@ class Authors extends Database {
     }
 
     public function getAllAuthors() {
-        $this->db->query("SELECT * FROM " . $this->table);
+        $this->db->query("SELECT * FROM {$this->table}");
         $results = $this->db->resultSet();
 
         return $results;

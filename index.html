@@ -11,15 +11,27 @@
   <body>
     <form id="authors-form" action="api.php?action=add-author" method="POST">
       <h2>Add author</h2>
-      <input class="input" type="text" name="author_firstname" />
-      <input class="input" type="text" name="author_lastname" />
+      <input
+        type="text"
+        name="author_firstname"
+        placeholder="Enter firstname"
+      />
+      <input type="text" name="author_lastname" placeholder=" Enter lastname" />
       <button type="submit">Submit</button>
     </form>
 
     <form id="comments-form" action="api.php?action=add-comment" method="POST">
       <h2>Add comment</h2>
       <select id="author_select" name="comment_author"></select>
-      <input class="input" type="text" name="comment_message" />
+      <br />
+      <textarea
+        type="text"
+        name="comment_message"
+        rows="5"
+        cols="50"
+        placeholder="Enter message"
+      ></textarea>
+      <br />
       <button type="submit">Submit</button>
     </form>
 

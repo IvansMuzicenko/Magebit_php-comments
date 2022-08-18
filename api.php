@@ -18,9 +18,10 @@ if (isset($_GET["api"])) {
             $lastname = $_POST['author_lastname'];
 
             if (isset($id) && isset($firstname) && isset($lastname)) {
-                $authors->addAuthor($id, $firstname, $lastname);
+                $result = $authors->addAuthor($id, $firstname, $lastname);
                 $output = [
                     'message' => 'New author added',
+                    'status' => $result
                 ];
             }
             break;
@@ -41,9 +42,10 @@ if (isset($_GET["api"])) {
             $message = $_POST['comment_message'];
 
             if (isset($id) && isset($author_id) && isset($message)) {
-                $comments->addComment($id, $author_id, $message);
+                $result = $comments->addComment($id, $author_id, $message);
                 $output = [
                     'message' => 'New comment added',
+                    'status' => $result
                 ];
             }
             break;

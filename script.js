@@ -8,12 +8,34 @@ const getAllAuthors = function () {
   })
     .then(async (response) => await response.json())
     .then((data) => {
+      document.querySelector("#author_select").innerHTML = "";
       data["authors"].forEach((author) => {
         addAuthor(author.id, author.firstname, author.lastname);
       });
     });
 };
 getAllAuthors();
+
+const getAllComments = function () {
+  fetch("api.php?api=get-all-comments", {
+    method: "GET",
+  })
+    .then(async (response) => await response.json())
+    .then((data) => {
+      document.querySelector("#comments-list").innerHTML = "";
+      data["comments"].forEach((comment) => {
+        console.log(comment);
+        addComment(
+          comment.id,
+          comment.message,
+          comment.date,
+          comment.firstname,
+          comment.lastname
+        );
+      });
+    });
+};
+getAllComments();
 
 const addAuthor = function (id, firstname, lastname) {
   const authorSelect = document.querySelector("#author_select");
@@ -24,6 +46,25 @@ const addAuthor = function (id, firstname, lastname) {
   newOption.textContent = firstname + " " + lastname;
 
   authorSelect.append(newOption);
+};
+const addComment = function (id, message, date, firstname, lastname) {
+  const commentsList = document.querySelector("#comments-list");
+
+  const newComment = document.createElement("div");
+  const newTitle = document.createElement("h3");
+  const newMessage = document.createElement("p");
+
+  newTitle.innerHTML = `<span>${firstname} ${lastname}</span> <span>${date}</span>`;
+  newMessage.textContent = message;
+
+  newComment.classList.add("comment");
+  newTitle.classList.add("comment__title");
+  newMessage.classList.add("comment__message");
+
+  newComment.append(newTitle);
+  newComment.append(newMessage);
+
+  commentsList.append(newComment);
 };
 
 authorsForm.onsubmit = function (evt) {
@@ -43,7 +84,13 @@ authorsForm.onsubmit = function (evt) {
   fetch("api.php?api=add-author", {
     method: "POST",
     body: data,
-  });
+  })
+    .then(async (response) => await response.json())
+    .then((data) => {
+      if (data.status) {
+        getAllAuthors();
+      }
+    });
 };
 
 commentsForm.onsubmit = function (evt) {
@@ -61,5 +108,11 @@ commentsForm.onsubmit = function (evt) {
   fetch("api.php?api=add-comment", {
     method: "POST",
     body: data,
-  });
+  })
+    .then(async (response) => await response.json())
+    .then((data) => {
+      if (data.status) {
+        getAllComments();
+      }
+    });
 };

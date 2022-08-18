@@ -1,0 +1,12 @@
+.comment {
+  border: 1px solid black;
+}
+.comment__title {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem;
+  padding: 0 1rem;
+}
+.comment__message {
+  padding: 1rem;
+}/*# sourceMappingURL=styles.css.map */
